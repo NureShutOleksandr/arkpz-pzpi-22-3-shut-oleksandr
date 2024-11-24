@@ -5,9 +5,9 @@ export class CreateRoleDto {
   @ApiProperty({ example: 'USER', description: 'Here you can create role whatever you want' })
   @IsNotEmpty()
   @IsString({ message: 'Should be a string' })
-  readonly value: string
+  value: string
   @ApiProperty({ example: 'default user role', description: 'Here you can create role whatever you want' })
   @IsNotEmpty()
   @IsString({ message: 'Should be a string' })
-  readonly description: string
+  description: string
 }

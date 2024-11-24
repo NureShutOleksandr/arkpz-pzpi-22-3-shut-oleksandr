@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { UsersService } from './users.service'
 import { User, UserDocument } from './users.schema'
 import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @ApiTags('users')
 @Controller('users')
@@ -29,5 +30,12 @@ export class UsersController {
   @Post()
   create(@Body() dto: CreateUserDto): Promise<UserDocument> {
     return this.usersService.create(dto)
+  }
+
+  @ApiOperation({ summary: 'Update user' })
+  @ApiResponse({ status: 200, type: User })
+  @Patch()
+  update(@Body() dto: UpdateUserDto): Promise<UserDocument> {
+    return this.usersService.update(dto)
   }
 }
