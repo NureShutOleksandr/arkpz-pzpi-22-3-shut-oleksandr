@@ -4,15 +4,19 @@ import { Role, RoleDocument } from './roles.schema'
 import { isValidObjectId, Model } from 'mongoose'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { UpdateRoleDto } from './dto/update-role.dto'
+import { User, UserDocument } from '../users/users.schema'
 
 @Injectable()
 export class RolesService {
-  constructor(@InjectModel(Role.name) private roleModel: Model<RoleDocument>) {}
+  constructor(
+    @InjectModel(Role.name) private roleModel: Model<RoleDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+  ) {}
 
   async getRoleByValue(value: string): Promise<RoleDocument> {
     const role = await this.roleModel.findOne({ value }).exec()
 
-    if (!role) throw new HttpException('Role not found by this name', HttpStatus.NOT_FOUND)
+    if (!role) throw new HttpException('Role not found by this name or has not been initialized', HttpStatus.NOT_FOUND)
 
     return role
   }
@@ -65,7 +69,13 @@ export class RolesService {
       throw new HttpException('Role not found', HttpStatus.NOT_FOUND)
     }
 
-    const deletedRole = this.roleModel.findByIdAndDelete(id).exec()
+    const users = await this.userModel.find({ roles: { $in: [role._id] } }).exec()
+
+    if (users.length) {
+      throw new HttpException('Role is used by users', HttpStatus.BAD_REQUEST)
+    }
+
+    const deletedRole = await this.roleModel.findByIdAndDelete(id).exec()
 
     return deletedRole
   }

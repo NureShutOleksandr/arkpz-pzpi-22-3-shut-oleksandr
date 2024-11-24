@@ -5,6 +5,8 @@ import { ValidationPipe } from '../../pipes/validation.pipe'
 import { CreateUserDto } from '../users/dto/create-user.dto'
 import { Response, Request } from 'express'
 import { LoginResponseDto } from './dto/login-response.dto'
+import { RegisterResponseDto } from './dto/register-response.dto'
+import { RefreshResponseDto } from './dto/refresh-response.dto'
 
 @ApiTags('auth')
 @Controller('auth')
@@ -27,6 +29,8 @@ export class AuthController {
     res.send({ message: 'Login successful', token: { accessToken } })
   }
 
+  @ApiOperation({ summary: 'user register' })
+  @ApiResponse({ status: 200, type: RegisterResponseDto })
   @UsePipes(ValidationPipe)
   @Post('/registration')
   @HttpCode(HttpStatus.CREATED)
@@ -42,7 +46,10 @@ export class AuthController {
     res.send({ message: 'Registration successful', token: { accessToken } })
   }
 
+  @ApiOperation({ summary: 'refresh access token' })
+  @ApiResponse({ status: 200, type: RefreshResponseDto })
   @Post('/refresh')
+  @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request, @Res() res: Response): Promise<void> {
     const accessTokenFromReq = req.cookies['accessToken']
 

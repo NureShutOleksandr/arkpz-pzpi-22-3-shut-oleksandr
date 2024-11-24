@@ -1,16 +1,19 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { Model, isValidObjectId } from 'mongoose'
 import { User, UserDocument } from './users.schema'
 import { RolesService } from '../roles/roles.service'
 import { InjectModel } from '@nestjs/mongoose'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { RoomsService } from '../rooms/rooms.service'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private readonly rolesService: RolesService,
+    @Inject(forwardRef(() => RoomsService))
+    private readonly roomsService: RoomsService,
   ) {}
 
   async getAllUsers(): Promise<UserDocument[]> {
@@ -86,6 +89,8 @@ export class UsersService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND)
     }
+
+    await this.roomsService.deleteRoomsByUserId(id)
 
     const deletedUser = await this.userModel.findByIdAndDelete(id).exec()
 
