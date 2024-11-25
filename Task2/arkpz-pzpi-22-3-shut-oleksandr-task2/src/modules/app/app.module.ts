@@ -5,6 +5,7 @@ import { UsersModule } from '../users/users.module'
 import { RolesModule } from '../roles/roles.module'
 import { AuthModule } from '../auth/auth.module'
 import { RoomsModule } from '../rooms/rooms.module'
+import { MicroclimateControlModule } from '../microclimate-control/microclimate-control.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RoomsModule } from '../rooms/rooms.module'
     RolesModule,
     AuthModule,
     RoomsModule,
+    MicroclimateControlModule,
   ],
   controllers: [],
   providers: [],
