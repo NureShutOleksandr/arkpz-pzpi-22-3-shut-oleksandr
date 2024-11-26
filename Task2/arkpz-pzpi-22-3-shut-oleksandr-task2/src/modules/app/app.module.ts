@@ -6,6 +6,7 @@ import { RolesModule } from '../roles/roles.module'
 import { AuthModule } from '../auth/auth.module'
 import { RoomsModule } from '../rooms/rooms.module'
 import { MicroclimateControlModule } from '../microclimate-control/microclimate-control.module'
+import { SensorsAdapterModule } from '../sensors-adapter/sensors-adapter.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MicroclimateControlModule } from '../microclimate-control/microclimate-
     AuthModule,
     RoomsModule,
     MicroclimateControlModule,
+    SensorsAdapterModule,
   ],
   controllers: [],
   providers: [],
