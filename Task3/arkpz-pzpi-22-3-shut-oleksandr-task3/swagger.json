@@ -1,0 +1,1152 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/users": {
+      "get": {
+        "operationId": "UsersController_getAllUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all users ",
+        "tags": [
+          "users"
+        ]
+      },
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "summary": "User creation",
+        "tags": [
+          "users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update user",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get user by id",
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete user",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/roles": {
+      "get": {
+        "operationId": "RolesController_getRoles",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all roles ",
+        "tags": [
+          "roles"
+        ]
+      },
+      "post": {
+        "operationId": "RolesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create role",
+        "tags": [
+          "roles"
+        ]
+      },
+      "patch": {
+        "operationId": "RolesController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update role",
+        "tags": [
+          "roles"
+        ]
+      }
+    },
+    "/api/roles/{value}": {
+      "get": {
+        "operationId": "RolesController_getByValue",
+        "parameters": [
+          {
+            "name": "value",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get role by value",
+        "tags": [
+          "roles"
+        ]
+      }
+    },
+    "/api/roles/{id}": {
+      "delete": {
+        "operationId": "RolesController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete role",
+        "tags": [
+          "roles"
+        ]
+      }
+    },
+    "/api/rooms": {
+      "get": {
+        "operationId": "RoomsController_getAllRooms",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Room"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all rooms",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "post": {
+        "operationId": "RoomsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create room",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "patch": {
+        "operationId": "RoomsController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update room",
+        "tags": [
+          "rooms"
+        ]
+      }
+    },
+    "/api/rooms/{id}": {
+      "get": {
+        "operationId": "RoomsController_getRoomById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get room by id",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "delete": {
+        "operationId": "RoomsController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete room",
+        "tags": [
+          "rooms"
+        ]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "user login",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/registration": {
+      "post": {
+        "operationId": "AuthController_registration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "user register",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "refresh access token",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/microclimate-control/{id}": {
+      "get": {
+        "operationId": "MicroclimateControlController_getMicroclimateData",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get microclimate data by room id",
+        "tags": [
+          "microclimate-control"
+        ]
+      },
+      "patch": {
+        "operationId": "MicroclimateControlController_updateMicroclimateData",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMicroclimateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update microclimate data",
+        "tags": [
+          "microclimate-control"
+        ]
+      }
+    },
+    "/api/microclimate-control/history/{id}": {
+      "get": {
+        "operationId": "MicroclimateControlController_getHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get history of parameter changes by room id",
+        "tags": [
+          "microclimate-control"
+        ]
+      }
+    },
+    "/api/sensors-adapter/temperature/{id}": {
+      "post": {
+        "operationId": "SensorsAdapterController_postTemperature",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSensorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post temperature data by room id",
+        "tags": [
+          "sensors-adapter"
+        ]
+      }
+    },
+    "/api/sensors-adapter/moisture/{id}": {
+      "post": {
+        "operationId": "SensorsAdapterController_postMoisture",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSensorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post moisture data by room id",
+        "tags": [
+          "sensors-adapter"
+        ]
+      }
+    },
+    "/api/sensors-adapter/carbonDioxide/{id}": {
+      "post": {
+        "operationId": "SensorsAdapterController_postCarbonDioxide",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSensorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post carbon dioxide data by room id",
+        "tags": [
+          "sensors-adapter"
+        ]
+      }
+    },
+    "/api/sensors-adapter/illumination/{id}": {
+      "post": {
+        "operationId": "SensorsAdapterController_postIllumination",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSensorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post illumination data by room id",
+        "tags": [
+          "sensors-adapter"
+        ]
+      }
+    },
+    "/api/illumination-adapter/{id}": {
+      "get": {
+        "operationId": "IlluminationAdapterController_getIllumination",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get illumination data by room id",
+        "tags": [
+          "illumination-adapter"
+        ]
+      },
+      "post": {
+        "operationId": "IlluminationAdapterController_postIllumination",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSensorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post illumination data by room id",
+        "tags": [
+          "illumination-adapter"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Project api",
+    "description": "Here stores api documentation",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "cdidk123",
+            "description": "username"
+          },
+          "password": {
+            "type": "string",
+            "example": "VERY_STRONG_PASSWORD",
+            "description": "user password"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "12134512df2144",
+            "description": "Id of role that u wanna update"
+          },
+          "username": {
+            "type": "string",
+            "example": "cdidk123",
+            "description": "username"
+          }
+        },
+        "required": [
+          "id",
+          "username"
+        ]
+      },
+      "Role": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateRoleDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "example": "USER",
+            "description": "Here you can create role whatever you want"
+          },
+          "description": {
+            "type": "string",
+            "example": "default user role",
+            "description": "Here you can create role whatever you want"
+          }
+        },
+        "required": [
+          "value",
+          "description"
+        ]
+      },
+      "UpdateRoleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "12134512df2144",
+            "description": "Id of role that u wanna update"
+          },
+          "value": {
+            "type": "string",
+            "example": "name of role actually",
+            "description": "It`s about of the role name"
+          },
+          "description": {
+            "type": "string",
+            "example": "description of role",
+            "description": "It`s about of the role description"
+          }
+        },
+        "required": [
+          "id",
+          "value",
+          "description"
+        ]
+      },
+      "Room": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateRoomDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "userId",
+            "description": "User ID"
+          },
+          "temperature": {
+            "type": "number",
+            "example": 22,
+            "description": "Temperature"
+          },
+          "moisture": {
+            "type": "number",
+            "example": 50,
+            "description": "Moisture"
+          },
+          "carbonDioxide": {
+            "type": "number",
+            "example": 400,
+            "description": "Carbon Dioxide (CO2)"
+          },
+          "illumination": {
+            "type": "number",
+            "example": 300,
+            "description": "Illumination"
+          }
+        },
+        "required": [
+          "user",
+          "temperature",
+          "moisture",
+          "carbonDioxide",
+          "illumination"
+        ]
+      },
+      "UpdateRoomDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "roomID",
+            "description": "Room ID"
+          },
+          "user": {
+            "type": "string",
+            "example": "userId",
+            "description": "User ID"
+          },
+          "temperature": {
+            "type": "number",
+            "example": 22,
+            "description": "Temperature"
+          },
+          "moisture": {
+            "type": "number",
+            "example": 50,
+            "description": "Moisture"
+          },
+          "carbonDioxide": {
+            "type": "number",
+            "example": 400,
+            "description": "Carbon Dioxide (CO2)"
+          },
+          "illumination": {
+            "type": "number",
+            "example": 300,
+            "description": "Illumination"
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "temperature",
+          "moisture",
+          "carbonDioxide",
+          "illumination"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Login successful",
+            "description": "Response message"
+          },
+          "token": {
+            "type": "object",
+            "example": {
+              "accessToken": "yourAccessToken"
+            },
+            "description": "Token object"
+          }
+        },
+        "required": [
+          "message",
+          "token"
+        ]
+      },
+      "RegisterResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Register successful",
+            "description": "Response message"
+          },
+          "token": {
+            "type": "object",
+            "example": {
+              "accessToken": "yourAccessToken"
+            },
+            "description": "Token object"
+          }
+        },
+        "required": [
+          "message",
+          "token"
+        ]
+      },
+      "RefreshResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Token updated",
+            "description": "Response message"
+          },
+          "token": {
+            "type": "object",
+            "example": {
+              "accessToken": "yourAccessToken"
+            },
+            "description": "Token object"
+          }
+        },
+        "required": [
+          "message",
+          "token"
+        ]
+      },
+      "UpdateMicroclimateDto": {
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "type": "number",
+            "example": 22,
+            "description": "Temperature"
+          },
+          "moisture": {
+            "type": "number",
+            "example": 50,
+            "description": "Moisture"
+          },
+          "carbonDioxide": {
+            "type": "number",
+            "example": 400,
+            "description": "Carbon Dioxide (CO2)"
+          },
+          "illumination": {
+            "type": "number",
+            "example": 300,
+            "description": "Illumination"
+          }
+        },
+        "required": [
+          "temperature",
+          "moisture",
+          "carbonDioxide",
+          "illumination"
+        ]
+      },
+      "UpdateSensorDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "example": 300,
+            "description": "Sensor value"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+    }
+  }
+}
