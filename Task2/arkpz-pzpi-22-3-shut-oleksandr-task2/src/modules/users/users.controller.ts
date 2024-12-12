@@ -28,7 +28,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Get user by username' })
   @ApiResponse({ status: 200, type: User })
-  @Get('/:username')
+  @Get('find-by-username/:username')
   getUserByUsername(@Param('username') username: string): Promise<UserDocument> {
     return this.usersService.getUserByUsername(username)
   }
