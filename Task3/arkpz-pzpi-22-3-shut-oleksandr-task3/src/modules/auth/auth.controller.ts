@@ -7,6 +7,8 @@ import { Response, Request } from 'express'
 import { LoginResponseDto } from './dto/login-response.dto'
 import { RegisterResponseDto } from './dto/register-response.dto'
 import { RefreshResponseDto } from './dto/refresh-response.dto'
+import { UpdatePasswordResponseDto } from './dto/update-password-response.dto'
+import { UpdatePasswordReqDto } from './dto/update-password-req.dto'
 
 @ApiTags('auth')
 @Controller('auth')
@@ -44,6 +46,15 @@ export class AuthController {
     })
 
     res.send({ message: 'Registration successful', token: { accessToken } })
+  }
+
+  @ApiOperation({ summary: 'change user password to another one' })
+  @ApiResponse({ status: 200, type: UpdatePasswordResponseDto })
+  @UsePipes(ValidationPipe)
+  @Post('/update-password')
+  @HttpCode(HttpStatus.OK)
+  async updatePassword(@Body() dto: UpdatePasswordReqDto): Promise<UpdatePasswordResponseDto> {
+    return this.authService.updatePassword(dto)
   }
 
   @ApiOperation({ summary: 'refresh access token' })

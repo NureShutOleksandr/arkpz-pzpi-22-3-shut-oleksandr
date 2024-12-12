@@ -26,12 +26,12 @@ export class UsersController {
     return this.usersService.getUserById(id)
   }
 
-  // @ApiOperation({ summary: 'Get user by username' })
-  // @ApiResponse({ status: 200, type: User })
-  // @Get('/:username')
-  // getUserByUsername(@Param('username') username: string): Promise<UserDocument> {
-  //   return this.usersService.getUserByUsername(username)
-  // }
+  @ApiOperation({ summary: 'Get user by username' })
+  @ApiResponse({ status: 200, type: User })
+  @Get('find-by-username/:username')
+  getUserByUsername(@Param('username') username: string): Promise<UserDocument> {
+    return this.usersService.getUserByUsername(username)
+  }
 
   @ApiOperation({ summary: 'User creation' })
   @ApiResponse({ status: 200, type: User })

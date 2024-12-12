@@ -146,6 +146,37 @@
         ]
       }
     },
+    "/api/users/find-by-username/{username}": {
+      "get": {
+        "operationId": "UsersController_getUserByUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get user by username",
+        "tags": [
+          "users"
+        ]
+      }
+    },
     "/api/roles": {
       "get": {
         "operationId": "RolesController_getRoles",
@@ -490,6 +521,38 @@
           }
         },
         "summary": "user register",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/update-password": {
+      "post": {
+        "operationId": "AuthController_updatePassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordReqDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatePasswordResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "change user password to another one",
         "tags": [
           "auth"
         ]
@@ -1080,6 +1143,45 @@
         "required": [
           "message",
           "token"
+        ]
+      },
+      "UpdatePasswordReqDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "cdidk"
+          },
+          "oldPassword": {
+            "type": "string",
+            "example": "VERY_STRONG_PASSWORD"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "VERY_STRONG_PASSWORD1"
+          },
+          "confirmNewPassword": {
+            "type": "string",
+            "example": "VERY_STRONG_PASSWORD1"
+          }
+        },
+        "required": [
+          "username",
+          "oldPassword",
+          "newPassword",
+          "confirmNewPassword"
+        ]
+      },
+      "UpdatePasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Password changed successfully"
+          }
+        },
+        "required": [
+          "message"
         ]
       },
       "RefreshResponseDto": {

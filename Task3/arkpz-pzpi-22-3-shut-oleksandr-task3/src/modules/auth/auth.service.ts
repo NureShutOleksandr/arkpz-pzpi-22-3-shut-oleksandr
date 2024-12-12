@@ -7,6 +7,8 @@ import * as bcrypt from 'bcryptjs'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { TokenResponseDto } from './dto/token-response.dto'
+import { UpdatePasswordReqDto } from './dto/update-password-req.dto'
+import { UpdatePasswordResponseDto } from './dto/update-password-response.dto'
 
 @Injectable()
 export class AuthService {
@@ -31,6 +33,28 @@ export class AuthService {
     const user = await this.usersService.create({ ...dto, password: hashPassword })
 
     return this.generateToken(user)
+  }
+
+  async updatePassword(dto: UpdatePasswordReqDto): Promise<UpdatePasswordResponseDto> {
+    const candidate = await this.userModel.findOne({ username: dto.username })
+
+    if (!candidate) throw new HttpException('User not found', HttpStatus.BAD_REQUEST)
+
+    const passwordEquals = await bcrypt.compare(dto.oldPassword, candidate.password)
+
+    if (!passwordEquals) throw new HttpException('Incorrect password', HttpStatus.BAD_REQUEST)
+
+    if (dto.newPassword !== dto.confirmNewPassword) {
+      throw new HttpException('New password do not match', HttpStatus.BAD_REQUEST)
+    }
+
+    const hashPassword = await bcrypt.hash(dto.newPassword, +process.env.PASSWORD_SALT)
+
+    candidate.password = hashPassword
+
+    candidate.save()
+
+    return { message: 'Password changed successfully' }
   }
 
   async refreshToken(accessToken: string): Promise<TokenResponseDto> {
@@ -64,6 +88,6 @@ export class AuthService {
 
     if (user && passwordEquals) return user
 
-    throw new UnauthorizedException({ message: 'Incorrect password' })
+    throw new HttpException({ message: 'Incorrect password' }, HttpStatus.BAD_REQUEST)
   }
 }
