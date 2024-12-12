@@ -32,7 +32,6 @@ export class MicroclimateControlController {
   @ApiResponse({ status: 200, type: Room })
   @Patch('/:id')
   @UsePipes(ValidationPipe)
-  @UseGuards(JwtAuthGuard)
   updateMicroclimateData(@Param('id') id: string, @Body() dto: UpdateMicroclimateDto): Promise<RoomDocument> {
     return this.microclimateControlService.updateMicroclimateData(id, dto)
   }

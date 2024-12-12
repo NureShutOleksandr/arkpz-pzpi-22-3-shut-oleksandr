@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common'
@@ -16,6 +17,8 @@ import { CreateRoleDto } from './dto/create-role.dto'
 import { Role, RoleDocument } from './roles.schema'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { UpdateRoleDto } from './dto/update-role.dto'
+import { Roles } from './roles-auth.decorator'
+import { RolesGuard } from './roles.guard'
 
 @ApiTags('roles')
 @Controller('roles')
@@ -24,6 +27,8 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Get all roles ' })
   @ApiResponse({ status: 200, type: [Role] })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Get()
   @HttpCode(HttpStatus.OK)
   getRoles(): Promise<RoleDocument[]> {
@@ -32,6 +37,8 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Get role by value' })
   @ApiResponse({ status: 200, type: Role })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Get('/:value')
   @HttpCode(HttpStatus.OK)
   getByValue(@Param('value') value: string): Promise<RoleDocument> {
@@ -41,6 +48,8 @@ export class RolesController {
   @ApiOperation({ summary: 'Create role' })
   @ApiResponse({ status: 201, type: Role })
   @UsePipes(ValidationPipe)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() dto: CreateRoleDto): Promise<RoleDocument> {
@@ -51,6 +60,8 @@ export class RolesController {
   @ApiOperation({ summary: 'Update role' })
   @ApiResponse({ status: 200, type: Role })
   @UsePipes(ValidationPipe)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Patch()
   @HttpCode(HttpStatus.OK)
   update(@Body() dto: UpdateRoleDto): Promise<RoleDocument> {
@@ -59,6 +70,8 @@ export class RolesController {
 
   @ApiOperation({ summary: 'Delete role' })
   @ApiResponse({ status: 200, type: Role })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Delete('/:id')
   delete(@Param('id') id: string): Promise<RoleDocument> {
     return this.roleService.deleteRole(id)

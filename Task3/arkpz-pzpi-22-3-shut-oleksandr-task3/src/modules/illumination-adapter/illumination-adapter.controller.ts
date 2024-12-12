@@ -33,7 +33,6 @@ export class IlluminationAdapterController {
   @ApiResponse({ status: 200, type: Room })
   @Post('/:id')
   @UsePipes(ValidationPipe)
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   postIllumination(@Param('id') id: string, @Body() dto: UpdateSensorDto): Promise<RoomDocument> {
     return this.illuminationAdapterService.updateIllumination(id, dto.value)
