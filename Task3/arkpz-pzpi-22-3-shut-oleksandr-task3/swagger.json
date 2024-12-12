@@ -558,6 +558,38 @@
         ]
       }
     },
+    "/api/auth/reset-password": {
+      "post": {
+        "operationId": "AuthController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordReqDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "reset password",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/api/auth/refresh": {
       "post": {
         "operationId": "AuthController_refresh",
@@ -1182,6 +1214,35 @@
         },
         "required": [
           "message"
+        ]
+      },
+      "ResetPasswordReqDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "cdidk123"
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "ResetPasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Password changed successfully"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "newPassword123"
+          }
+        },
+        "required": [
+          "message",
+          "newPassword"
         ]
       },
       "RefreshResponseDto": {

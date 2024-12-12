@@ -9,6 +9,8 @@ import { RegisterResponseDto } from './dto/register-response.dto'
 import { RefreshResponseDto } from './dto/refresh-response.dto'
 import { UpdatePasswordResponseDto } from './dto/update-password-response.dto'
 import { UpdatePasswordReqDto } from './dto/update-password-req.dto'
+import { ResetPasswordResponseDto } from './dto/reset-password-response.dto'
+import { ResetPasswordReqDto } from './dto/reset-password-req.dto'
 
 @ApiTags('auth')
 @Controller('auth')
@@ -55,6 +57,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async updatePassword(@Body() dto: UpdatePasswordReqDto): Promise<UpdatePasswordResponseDto> {
     return this.authService.updatePassword(dto)
+  }
+
+  @ApiOperation({ summary: 'reset password' })
+  @ApiResponse({ status: 200, type: ResetPasswordResponseDto })
+  @UsePipes(ValidationPipe)
+  @Post('/reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() dto: ResetPasswordReqDto): Promise<ResetPasswordResponseDto> {
+    return this.authService.resetPassword(dto.username)
   }
 
   @ApiOperation({ summary: 'refresh access token' })

@@ -9,6 +9,7 @@ import { Model } from 'mongoose'
 import { TokenResponseDto } from './dto/token-response.dto'
 import { UpdatePasswordReqDto } from './dto/update-password-req.dto'
 import { UpdatePasswordResponseDto } from './dto/update-password-response.dto'
+import { ResetPasswordResponseDto } from './dto/reset-password-response.dto'
 
 @Injectable()
 export class AuthService {
@@ -55,6 +56,22 @@ export class AuthService {
     candidate.save()
 
     return { message: 'Password changed successfully' }
+  }
+
+  async resetPassword(username: string): Promise<ResetPasswordResponseDto> {
+    const candidate = await this.userModel.findOne({ username })
+
+    if (!candidate) throw new HttpException('User not found', HttpStatus.BAD_REQUEST)
+
+    const newPassword = Math.random().toString(36).slice(-8)
+
+    const hashPassword = await bcrypt.hash(newPassword, +process.env.PASSWORD_SALT)
+
+    candidate.password = hashPassword
+
+    candidate.save()
+
+    return { message: 'Password reset successfully', newPassword }
   }
 
   async refreshToken(accessToken: string): Promise<TokenResponseDto> {
