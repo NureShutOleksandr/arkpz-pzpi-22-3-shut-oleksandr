@@ -196,6 +196,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Get all roles ",
         "tags": [
           "roles"
@@ -226,6 +231,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Create role",
         "tags": [
           "roles"
@@ -256,6 +266,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Update role",
         "tags": [
           "roles"
@@ -287,6 +302,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Get role by value",
         "tags": [
           "roles"
@@ -318,147 +338,14 @@
             }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Delete role",
         "tags": [
           "roles"
-        ]
-      }
-    },
-    "/api/rooms": {
-      "get": {
-        "operationId": "RoomsController_getAllRooms",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Room"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "summary": "Get all rooms",
-        "tags": [
-          "rooms"
-        ]
-      },
-      "post": {
-        "operationId": "RoomsController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Create room",
-        "tags": [
-          "rooms"
-        ]
-      },
-      "patch": {
-        "operationId": "RoomsController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRoomDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Update room",
-        "tags": [
-          "rooms"
-        ]
-      }
-    },
-    "/api/rooms/{id}": {
-      "get": {
-        "operationId": "RoomsController_getRoomById",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Get room by id",
-        "tags": [
-          "rooms"
-        ]
-      },
-      "delete": {
-        "operationId": "RoomsController_delete",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": ""
-          }
-        },
-        "summary": "Delete room",
-        "tags": [
-          "rooms"
         ]
       }
     },
@@ -609,6 +496,144 @@
         "summary": "refresh access token",
         "tags": [
           "auth"
+        ]
+      }
+    },
+    "/api/rooms": {
+      "get": {
+        "operationId": "RoomsController_getAllRooms",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Room"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all rooms",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "post": {
+        "operationId": "RoomsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create room",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "patch": {
+        "operationId": "RoomsController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update room",
+        "tags": [
+          "rooms"
+        ]
+      }
+    },
+    "/api/rooms/{id}": {
+      "get": {
+        "operationId": "RoomsController_getRoomById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get room by id",
+        "tags": [
+          "rooms"
+        ]
+      },
+      "delete": {
+        "operationId": "RoomsController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete room",
+        "tags": [
+          "rooms"
         ]
       }
     },
@@ -949,6 +974,56 @@
           "illumination-adapter"
         ]
       }
+    },
+    "/api/backup/create": {
+      "post": {
+        "operationId": "BackupController_createBackup",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "create backup ",
+        "tags": [
+          "backup"
+        ]
+      }
+    },
+    "/api/backup/restore": {
+      "post": {
+        "operationId": "BackupController_restoreBackup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResoteReqDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "make restore for db",
+        "tags": [
+          "backup"
+        ]
+      }
     }
   },
   "info": {
@@ -960,6 +1035,13 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
     "schemas": {
       "User": {
         "type": "object",
@@ -1049,90 +1131,6 @@
           "id",
           "value",
           "description"
-        ]
-      },
-      "Room": {
-        "type": "object",
-        "properties": {}
-      },
-      "CreateRoomDto": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "string",
-            "example": "userId",
-            "description": "User ID"
-          },
-          "temperature": {
-            "type": "number",
-            "example": 22,
-            "description": "Temperature"
-          },
-          "moisture": {
-            "type": "number",
-            "example": 50,
-            "description": "Moisture"
-          },
-          "carbonDioxide": {
-            "type": "number",
-            "example": 400,
-            "description": "Carbon Dioxide (CO2)"
-          },
-          "illumination": {
-            "type": "number",
-            "example": 300,
-            "description": "Illumination"
-          }
-        },
-        "required": [
-          "user",
-          "temperature",
-          "moisture",
-          "carbonDioxide",
-          "illumination"
-        ]
-      },
-      "UpdateRoomDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "roomID",
-            "description": "Room ID"
-          },
-          "user": {
-            "type": "string",
-            "example": "userId",
-            "description": "User ID"
-          },
-          "temperature": {
-            "type": "number",
-            "example": 22,
-            "description": "Temperature"
-          },
-          "moisture": {
-            "type": "number",
-            "example": 50,
-            "description": "Moisture"
-          },
-          "carbonDioxide": {
-            "type": "number",
-            "example": 400,
-            "description": "Carbon Dioxide (CO2)"
-          },
-          "illumination": {
-            "type": "number",
-            "example": 300,
-            "description": "Illumination"
-          }
-        },
-        "required": [
-          "id",
-          "user",
-          "temperature",
-          "moisture",
-          "carbonDioxide",
-          "illumination"
         ]
       },
       "LoginResponseDto": {
@@ -1266,6 +1264,90 @@
           "token"
         ]
       },
+      "Room": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateRoomDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "userId",
+            "description": "User ID"
+          },
+          "temperature": {
+            "type": "number",
+            "example": 22,
+            "description": "Temperature"
+          },
+          "moisture": {
+            "type": "number",
+            "example": 50,
+            "description": "Moisture"
+          },
+          "carbonDioxide": {
+            "type": "number",
+            "example": 400,
+            "description": "Carbon Dioxide (CO2)"
+          },
+          "illumination": {
+            "type": "number",
+            "example": 300,
+            "description": "Illumination"
+          }
+        },
+        "required": [
+          "user",
+          "temperature",
+          "moisture",
+          "carbonDioxide",
+          "illumination"
+        ]
+      },
+      "UpdateRoomDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "roomID",
+            "description": "Room ID"
+          },
+          "user": {
+            "type": "string",
+            "example": "userId",
+            "description": "User ID"
+          },
+          "temperature": {
+            "type": "number",
+            "example": 22,
+            "description": "Temperature"
+          },
+          "moisture": {
+            "type": "number",
+            "example": 50,
+            "description": "Moisture"
+          },
+          "carbonDioxide": {
+            "type": "number",
+            "example": 400,
+            "description": "Carbon Dioxide (CO2)"
+          },
+          "illumination": {
+            "type": "number",
+            "example": 300,
+            "description": "Illumination"
+          }
+        },
+        "required": [
+          "id",
+          "user",
+          "temperature",
+          "moisture",
+          "carbonDioxide",
+          "illumination"
+        ]
+      },
       "UpdateMicroclimateDto": {
         "type": "object",
         "properties": {
@@ -1308,6 +1390,18 @@
         },
         "required": [
           "value"
+        ]
+      },
+      "ResoteReqDto": {
+        "type": "object",
+        "properties": {
+          "backupName": {
+            "type": "string",
+            "example": "file backup name"
+          }
+        },
+        "required": [
+          "backupName"
         ]
       }
     }

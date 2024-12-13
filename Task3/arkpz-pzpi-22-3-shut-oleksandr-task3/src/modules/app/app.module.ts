@@ -8,6 +8,7 @@ import { RoomsModule } from '../rooms/rooms.module'
 import { MicroclimateControlModule } from '../microclimate-control/microclimate-control.module'
 import { SensorsAdapterModule } from '../sensors-adapter/sensors-adapter.module'
 import { IlluminationAdapterModule } from '../illumination-adapter/illumination-adapter.module'
+import { BackupModule } from '../backup/backup.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { IlluminationAdapterModule } from '../illumination-adapter/illumination-
     MicroclimateControlModule,
     SensorsAdapterModule,
     IlluminationAdapterModule,
+    BackupModule,
   ],
   controllers: [],
   providers: [],

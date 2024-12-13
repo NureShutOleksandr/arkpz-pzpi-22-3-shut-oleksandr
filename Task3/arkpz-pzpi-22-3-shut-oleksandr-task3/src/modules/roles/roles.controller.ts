@@ -15,12 +15,13 @@ import {
 import { RolesService } from './roles.service'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { Role, RoleDocument } from './roles.schema'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { UpdateRoleDto } from './dto/update-role.dto'
 import { Roles } from './roles-auth.decorator'
 import { RolesGuard } from './roles.guard'
 
 @ApiTags('roles')
+@ApiBearerAuth()
 @Controller('roles')
 export class RolesController {
   constructor(private readonly roleService: RolesService) {}
