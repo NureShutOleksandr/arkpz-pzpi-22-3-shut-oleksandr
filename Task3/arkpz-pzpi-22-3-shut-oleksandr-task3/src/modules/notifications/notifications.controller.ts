@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Param, Body, Post } from '@nestjs/common'
+import { Controller, Get, UseGuards, Param, Body, Post, Delete } from '@nestjs/common'
 import { NotificationsService } from './notifications.service'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
@@ -24,5 +24,13 @@ export class NotificationsController {
   @UseGuards(JwtAuthGuard)
   async createNotification(@Body() dto: CreateNotificationDto): Promise<NotificationDocument> {
     return this.notificationsService.createNotification(dto.user, dto.message)
+  }
+
+  @ApiOperation({ summary: 'Delete notification' })
+  @ApiResponse({ status: 200, type: Notification })
+  @Delete('/:id')
+  @UseGuards(JwtAuthGuard)
+  async deleteNotification(@Param('id') id: string): Promise<NotificationDocument> {
+    return this.notificationsService.deleteNotification(id)
   }
 }

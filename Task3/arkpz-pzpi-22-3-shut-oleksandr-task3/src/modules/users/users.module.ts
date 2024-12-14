@@ -7,6 +7,7 @@ import { RolesModule } from '../roles/roles.module'
 import { RoomsModule } from '../rooms/rooms.module'
 import { Room, RoomSchema } from '../rooms/rooms.schema'
 import { Notification, NotificationSchema } from '../notifications/notifications.schema'
+import { NotificationsModule } from '../notifications/notifications.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Notification, NotificationSchema } from '../notifications/notifications
     MongooseModule.forFeature([{ name: Notification.name, schema: NotificationSchema }]),
     RolesModule,
     forwardRef(() => RoomsModule),
+    NotificationsModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { RoomsService } from '../rooms/rooms.service'
+import { NotificationsService } from '../notifications/notifications.service'
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,7 @@ export class UsersService {
     private readonly rolesService: RolesService,
     @Inject(forwardRef(() => RoomsService))
     private readonly roomsService: RoomsService,
+    @Inject() private readonly notificationsService: NotificationsService,
   ) {}
 
   async getAllUsers(): Promise<UserDocument[]> {
@@ -91,6 +93,7 @@ export class UsersService {
     }
 
     await this.roomsService.deleteRoomsByUserId(id)
+    await this.notificationsService.deleteNotificationsByUser(id)
 
     const deletedUser = await this.userModel.findByIdAndDelete(id).exec()
 

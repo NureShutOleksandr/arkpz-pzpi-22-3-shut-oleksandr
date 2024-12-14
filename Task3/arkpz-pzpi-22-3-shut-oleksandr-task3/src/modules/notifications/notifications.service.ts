@@ -43,4 +43,37 @@ export class NotificationsService {
 
     return this.notificationModel.find({ user: userId }).exec()
   }
+
+  async deleteNotification(id: string): Promise<NotificationDocument> {
+    if (!isValidObjectId(id)) {
+      throw new HttpException('Invalid ID format', HttpStatus.BAD_REQUEST)
+    }
+
+    const notification = await this.notificationModel.findById(id).exec()
+
+    if (!notification) {
+      throw new HttpException('Notification not found', HttpStatus.NOT_FOUND)
+    }
+
+    const user = await this.usersModel.findById(notification.user).exec()
+
+    user.notifications = user.notifications.filter(notificationId => notificationId.toString() !== id)
+    user.save()
+
+    return this.notificationModel.findByIdAndDelete(id).exec()
+  }
+
+  async deleteNotificationsByUser(userId: string): Promise<void> {
+    if (!isValidObjectId(userId)) {
+      throw new HttpException('Invalid ID format', HttpStatus.BAD_REQUEST)
+    }
+
+    const candidate = await this.usersModel.findById(userId).exec()
+
+    if (!candidate) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+    }
+
+    await this.notificationModel.deleteMany({ user: userId }).exec()
+  }
 }
