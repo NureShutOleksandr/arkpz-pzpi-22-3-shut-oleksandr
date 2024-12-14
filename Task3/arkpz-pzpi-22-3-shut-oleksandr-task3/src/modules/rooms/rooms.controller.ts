@@ -32,6 +32,15 @@ export class RoomsController {
     return this.roomsService.getAllRooms()
   }
 
+  @ApiOperation({ summary: 'Analyze room data and generate recommendations' })
+  @ApiResponse({ status: 200, description: 'Personalized recommendations' })
+  @Get('/:id/analyze')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  async analyzeRoom(@Param('id') id: string): Promise<any> {
+    return this.roomsService.analyzeRoom(id)
+  }
+
   @ApiOperation({ summary: 'Get room by id' })
   @ApiResponse({ status: 200, type: Room })
   @Get('/:id')

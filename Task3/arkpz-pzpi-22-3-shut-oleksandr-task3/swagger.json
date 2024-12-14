@@ -584,6 +584,30 @@
         ]
       }
     },
+    "/api/rooms/{id}/analyze": {
+      "get": {
+        "operationId": "RoomsController_analyzeRoom",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Personalized recommendations"
+          }
+        },
+        "summary": "Analyze room data and generate recommendations",
+        "tags": [
+          "rooms"
+        ]
+      }
+    },
     "/api/rooms/{id}": {
       "get": {
         "operationId": "RoomsController_getRoomById",
@@ -634,6 +658,72 @@
         "summary": "Delete room",
         "tags": [
           "rooms"
+        ]
+      }
+    },
+    "/api/notifications/{userId}": {
+      "get": {
+        "operationId": "NotificationsController_getUserNotifications",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get notifications by user",
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/api/notifications": {
+      "post": {
+        "operationId": "NotificationsController_createNotification",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create notification",
+        "tags": [
+          "notifications"
         ]
       }
     },
@@ -1346,6 +1436,28 @@
           "moisture",
           "carbonDioxide",
           "illumination"
+        ]
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "userId",
+            "description": "User ID"
+          },
+          "message": {
+            "type": "string",
+            "example": "temperature is higher than normal"
+          }
+        },
+        "required": [
+          "user",
+          "message"
         ]
       },
       "UpdateMicroclimateDto": {

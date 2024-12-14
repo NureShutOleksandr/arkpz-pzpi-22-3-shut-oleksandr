@@ -9,6 +9,7 @@ import { MicroclimateControlModule } from '../microclimate-control/microclimate-
 import { SensorsAdapterModule } from '../sensors-adapter/sensors-adapter.module'
 import { IlluminationAdapterModule } from '../illumination-adapter/illumination-adapter.module'
 import { BackupModule } from '../backup/backup.module'
+import { NotificationsModule } from '../notifications/notifications.module'
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { BackupModule } from '../backup/backup.module'
     SensorsAdapterModule,
     IlluminationAdapterModule,
     BackupModule,
+    NotificationsModule,
   ],
   controllers: [],
   providers: [],
