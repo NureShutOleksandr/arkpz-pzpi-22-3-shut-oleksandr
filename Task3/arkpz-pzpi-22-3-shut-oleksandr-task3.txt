@@ -1,0 +1,280 @@
+﻿Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+Катедра програмної інженерії
+
+
+
+ЗВІТ
+до лабораторної роботи №3
+з дисципліни  «Аналіз та рефакторинг коду»
+на тему: «РОЗРОБКА БІЗНЕС-ЛОГІКИ ТА ФУНКЦІЙ АДМІНІСТРУВАННЯ СЕРВЕРНОЇ ЧАСТИНИ ПРОГРАМНОЇ СИСТЕМИ»
+
+
+
+
+Виконав
+ст. гр. ПЗПІ-22-3
+Шуть Олександр Вікторович
+
+Перевірив
+ст. викладач катедри ПІ
+Сокорчук Ігор Петрович
+
+
+
+
+
+
+
+Харків 2024
+1 МЕТА РОБОТИ
+
+     Метою роботи є розробити бізнес логіку та функції адміністрування серверної частини програмної системи.
+
+2 ХІД РОБОТИ
+
+     Під час виконання лабораторної роботи було реалізовано низку функціональних можливостей, що охоплюють ключові аспекти адміністрування, безпеки та аналітики даних. Опис інженерних рішень:
+     * Система передбачає відновлення пароля за username та можливість зміни пароля.
+     * Для забезпечення безпечного зберігання даних користувачів паролі були захешовані за допомогою bcrypt, що значно підвищує стійкість системи до атак.
+     * Управління сесіями авторизації реалізовано через JwtAuthGuard, який працює із збереженням даних користувачів за допомогою JWT-токенів. Це дозволяє обмежувати доступ до певного функціоналу для неавторизованих користувачів.
+     * Крім того, за допомогою RolesGuard забезпечується перевірка ролей користувача перед виконанням певних API-запитів, що дозволяє диференціювати доступ до функцій залежно від ролі.
+     * Функціонал адміністрування було розширено завдяки можливостям створення резервних копій бази даних (backup) і її відновлення (restore). Це забезпечує надійність роботи системи та можливість швидкого відновлення даних у разі збоїв.
+     * Одним із ключових компонентів системи став модуль аналізу даних кімнати, який включає кореляційний та регресійний аналіз. Кореляційний аналіз дозволяє дослідити зв’язки між різними параметрами, такими як температура, вологість, вміст вуглекислого газу та рівень освітлення. Значення коефіцієнтів кореляції показують ступінь і напрямок зв’язку між змінними, приклад значень кореляції та пояснення, що це означає:
+        1. Між температурою та вологістю спостерігається негативна кореляція (-0.445), що вказує на зниження вологості зі збільшенням температури.
+        2. Температура також має сильний негативний зв’язок із вмістом вуглекислого газу (-0.735), що вказує на зниження вуглекислого газу при збільшені температури.
+        3. Водночас вологість та вміст CO₂ показують сильну позитивну кореляцію (0.767), що вказує на підвищення вмісту CO₂ при збільшенні вологості.
+     * Регресійний аналіз надав математичну модель залежності вологості від температури: y = -0.36x + 49.89. У цій формулі x (температура) є незалежною змінною, а y (вологість) – залежною. Коефіцієнт нахилу (-0.36) показує, що з підвищенням температури на 1°C вологість зменшується на 0.36%. Значення перетину (49.89) демонструє прогнозовану вологість за температури 0°C. Ця модель дозволяє оцінювати тренди змін і прогнозувати поведінку параметрів у майбутньому. 
+     * Окрім цього, було проведено додаткову статистичну обробку даних, включаючи розрахунок мінімальних, максимальних, середніх значень, медіани та різниці між максимальними й мінімальними показниками для параметрів кімнати. На основі аналізу даних були сформовані тренди та рекомендації для покращення умов у приміщенні, що сприяє оптимізації використання ресурсів і підвищенню ефективності управління середовищем.
+     * Також у системі реалізовано функціонал нотифікацій для користувачів. Сповіщення надсилаються у випадках, коли показники кімнати виходять за допустимі межі. Це дозволяє оперативно реагувати на критичні ситуації, наприклад, надмірне підвищення рівня CO₂, занадто низьку вологість чи інші відхилення від встановлених норм. Нотифікації спрямовані на підвищення безпеки та комфорту користувачів, а також допомагають підтримувати оптимальні умови у приміщенні.
+
+
+
+ВИСНОВКИ
+
+     У ході роботи було реалізовано бізнес-логіку, що поєднує функції безпеки, адміністрування та аналізу даних. Впроваджено сучасні рішення для захисту паролів, авторизації через JWT, перевірки ролей користувачів і резервного копіювання бази даних. Аналіз даних кімнати охоплює кореляційний і регресійний аналіз, що дозволяє виявляти залежності між параметрами, такими як температура, вологість і вміст CO₂, та будувати математичні моделі для прогнозування. Функція нотифікацій забезпечує швидке інформування про критичні відхилення показників. Це сприяє підвищенню безпеки, ефективності управління та оптимізації ресурсів у приміщенні.
+
+ДОДАТОК А
+UML діаграми діяльності
+ 
+
+Рисунок А.1 – Створення резервної копії та відновлення бази даних
+
+
+Рисунок А.2 – Аналіз даних кімнати (кореляційний та регресійний аналіз)
+
+
+Рисунок А.3 – Відправка повідомлень користувачу
+
+ДОДАТОК Б
+UML діаграма взаємодії
+
+
+Рисунок Б.1 – Створення резервної копії бази даних
+ДОДАТОК В
+Фрагмент програмного коду (математичних методів обробки даних) серверної частини
+
+01 public async analyzeRoom(id: string): Promise<{ analysis: Record<string, any> }> {
+02   if (!isValidObjectId(id)) {
+03     throw new HttpException('Invalid room ID format', HttpStatus.BAD_REQUEST)
+04   }
+05 
+06   const room = await this.roomModel.findById(id).exec()
+07   if (!room) {
+08     throw new HttpException('Room not found', HttpStatus.NOT_FOUND)
+09   }
+10 
+11   const limitedHistory = room.historyChanges.slice(-4)
+12 
+13   const combinedData = [
+14     {
+15       temperature: room.temperature,
+16       moisture: room.moisture,
+17       carbonDioxide: room.carbonDioxide,
+18       illumination: room.illumination,
+19     },
+20     ...limitedHistory,
+21   ]
+22
+23   const data: Record<string, number[]> = {
+24     temperature: combinedData.map(entry => entry.temperature),
+25     moisture: combinedData.map(entry => entry.moisture),
+26     carbonDioxide: combinedData.map(entry => entry.carbonDioxide),
+27     illumination: combinedData.map(entry => entry.illumination),
+28   }
+29
+30   const stats = this.calculateStatistics(data)
+31   const trends = this.detectTrends(data)
+32   const correlation = this.calculateCorrelation(data)
+33   const regression = this.performRegression(data)
+34
+35   const analysis = {
+36     statistics: stats,
+37     trends,
+38     correlation,
+39     regression,
+40     recommendations: this.generateRecommendations(trends),
+41   }
+42
+43   if (trends.length > 0) {
+44     trends.forEach(async trend => {
+45       await this.notificationsService.createNotification(room.user.toString(), trend)
+46     })
+47   }
+48
+49   return { analysis }
+50 }
+51
+52 private calculateStatistics(data: Record<string, number[]>): Record<string, number> {
+53   const statistics: Record<string, number> = {}
+54   for (const key in data) {
+55     const values = data[key]
+56     statistics[`${key}_mean`] = math.mean(values)
+57     statistics[`${key}_median`] = math.median(values)
+58     statistics[`${key}_min`] = math.min(values)
+59     statistics[`${key}_max`] = math.max(values)
+60     statistics[`${key}_range`] = math.max(values) - math.min(values)
+61   }
+62   return statistics
+63 }
+64
+65 private performRegression(data: Record<string, number[]>): string {
+66   // A simple regression analize: dependence of moisture on temperature
+67   const x = data.temperature
+68   const y = data.moisture
+69
+70   const meanX = math.mean(x) as number
+71   const meanY = math.mean(y) as number
+72   const slope =
+73     (math.sum(x.map((xi, idx) => (xi - meanX) * (y[idx] - meanY))) as number) /
+74     (math.sum(x.map(xi => math.square(xi - meanX))) as number)
+75   const intercept = meanY - slope * meanX
+76
+77   return `y = ${slope.toFixed(2)}x + ${intercept.toFixed(2)}`
+78 }
+79
+80 private correlationCoefficient(x: number[], y: number[]): number {
+81   // A simple example of calculating correlation for two values
+82   const meanX = math.mean(x) as number
+83   const meanY = math.mean(y) as number
+84   const numerator = math.sum(x.map((xi, idx) => (xi - meanX) * (y[idx] - meanY))) as number
+85   const sumX = math.sum(x.map(xi => math.square(xi - meanX))) as number
+86   const sumY = math.sum(y.map(yi => math.square(yi - meanY))) as number
+87   const denominator = Math.sqrt(sumX * sumY)
+88   return numerator / denominator
+89 }
+90
+91 private calculateCorrelation(data: Record<string, number[]>): Record<string, number> {
+92   // Correlation between every key pair of parameters
+93   const keys = Object.keys(data)
+94   const correlationMatrix: Record<string, number> = {}
+95
+96   for (let i = 0; i < keys.length; i++) {
+97     for (let j = i + 1; j < keys.length; j++) {
+98       const key1 = keys[i]
+99       const key2 = keys[j]
+100       correlationMatrix[`${key1}-${key2}`] = this.correlationCoefficient(data[key1], data[key2])
+101     }
+102   }
+103
+104   return correlationMatrix
+105 }
+106
+107 private detectTrends(data: Record<string, number[]>): string[] {
+108   const trends: string[] = []
+109   const statistics = this.calculateStatistics(data)
+110
+111   const trendRules = [
+112     { condition: statistics.temperature_mean > 25, message: 'Temperature is higher than normal' },
+113     { condition: statistics.temperature_mean < 18, message: 'Temperature is lower than normal' },
+114     { condition: statistics.moisture_mean < 30, message: 'Moisture level is critically low' },
+115     { condition: statistics.moisture_mean > 60, message: 'Moisture level is too high' },
+116     { condition: statistics.carbonDioxide_mean > 1000, message: 'CO2 concentration is dangerously high' },
+117     { condition: statistics.carbonDioxide_mean < 400, message: 'CO2 concentration is unusually low' },
+118     { condition: statistics.illumination_mean < 200, message: 'Room is poorly illuminated' },
+119     { condition: statistics.illumination_mean > 800, message: 'Room is over-illuminated' },
+120   ]
+121
+122   trendRules.forEach(rule => {
+123     if (rule.condition) {
+124       trends.push(rule.message)
+125     }
+126   })
+127
+128   return Array.from(new Set(trends))
+129 }
+130
+131 private generateRecommendations(trends: string[]): string[] {
+132   const recommendations: string[] = []
+133
+134   const recommendationMap: Record<string, string> = {
+135     'Temperature is higher than normal': 'Consider lowering the temperature for comfort.',
+136     'Temperature is lower than normal': 'Consider raising the temperature to ensure comfort.',
+137     'Moisture level is critically low': 'Use a humidifier to increase moisture.',
+138     'Moisture level is too high': 'Use a dehumidifier to reduce moisture levels.',
+139     'CO2 concentration is dangerously high': 'Improve ventilation to reduce CO2 levels.',
+140     'CO2 concentration is unusually low': 'Ensure sensors are functioning correctly or adjust ventilation settings.',
+141     'Room is poorly illuminated': 'Increase lighting for better visibility.',
+142     'Room is over-illuminated': 'Reduce lighting to save energy and maintain comfort.',
+143   }
+144
+145   trends.forEach(trend => {
+146     if (recommendationMap[trend]) {
+147       recommendations.push(recommendationMap[trend])
+148     }
+149   })
+150
+151   return recommendations
+152 }
+
+Фрагмент коду адміністурвання серверної частини
+
+01 @Injectable()
+02 export class BackupService {
+03   private readonly rootDir = path.resolve(__dirname, '../../../')
+04   private readonly backupDir = path.join(this.rootDir, 'backups')
+05   private readonly mongoUri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.n6rx4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+06
+07   async createBackup(): Promise<{ success: boolean; message: string }> {
+08     if (!fs.existsSync(this.backupDir)) {
+09       fs.mkdirSync(this.backupDir, { recursive: true })
+10     }
+11
+12     const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
+13     const backupPath = path.join(this.backupDir, `backup-${timestamp}`)
+14
+15     return new Promise(resolve => {
+16       const command = `mongodump --uri "${this.mongoUri}" --out ${backupPath}`
+17       exec(command, (error, stdout, stderr) => {
+18         if (error) {
+19           resolve({ success: false, message: stderr })
+20         } else {
+21           resolve({ success: true, message: `Backup created at ${backupPath}` })
+22         }
+23       })
+24     })
+25   }
+26
+27   async restoreBackup(filePath: string): Promise<{ success: boolean; message: string }> {
+28     if (!filePath || !fs.existsSync(filePath)) {
+29       return {
+30         success: false,
+31         message: `Invalid or missing filePath: ${filePath}`,
+32       }
+33     }
+34
+35     return new Promise(resolve => {
+36       const command = `mongorestore --uri "${this.mongoUri}" --dir ${filePath} --drop`
+37       exec(command, (error, stdout, stderr) => {
+38         if (error) {
+39           resolve({ success: false, message: stderr })
+40         } else {
+41           resolve({ success: true, message: 'Database restored successfully' })
+42         }
+43       })
+44     })
+45   }
+46 }
+ДОДАТОК Г
+Відео-посилання на Youtube
+
+ Посилання: https://youtu.be/pEAYW7Kbzjw
