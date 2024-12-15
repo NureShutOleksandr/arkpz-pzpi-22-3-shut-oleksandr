@@ -120,7 +120,7 @@ export class RoomsService {
       throw new HttpException('Room not found', HttpStatus.NOT_FOUND)
     }
 
-    const limitedHistory = room.historyChanges.slice(-4)
+    const limitedHistory = room.historyChanges.slice(0, 4)
 
     const combinedData = [
       {
@@ -175,7 +175,7 @@ export class RoomsService {
   }
 
   private performRegression(data: Record<string, number[]>): string {
-    // Простий регресивний аналіз: залежність вологості від температури
+    // A simple regression analize: dependence of moisture on temperature
     const x = data.temperature
     const y = data.moisture
 
