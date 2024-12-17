@@ -1,0 +1,204 @@
+﻿Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+Катедра програмної інженерії
+
+
+
+ЗВІТ
+до лабораторної роботи №4
+з дисципліни  «Аналіз та рефакторинг коду»
+на тему: «РОЗРОБКА IoT КЛІЄНТА»
+
+
+
+
+Виконав
+ст. гр. ПЗПІ-22-3
+Шуть Олександр Вікторович
+
+Перевірив
+ст. викладач катедри ПІ
+Сокорчук Ігор Петрович
+
+
+
+
+
+
+
+
+Харків 2024
+1 МЕТА РОБОТИ
+
+     Розробити IoT-клієнт, що забезпечує збирання, обробку та передачу даних до серверу відповідно до концепції Інтернету речей. Реалізувати бізнес-логіку, функції налаштування пристрою та забезпечити взаємодію з іншими компонентами системи.
+
+2 ХІД РОБОТИ
+
+     Під час виконання лабораторної роботи було реалізовано кілька інженерних рішень, які забезпечують функціональність та ефективність роботи програмного забезпечення. Опис інженерних рішень:
+     * Реалізовано функцію автоматичного з’єднання з бездротовою мережею. У випадку відсутності доступу до заданої мережі система здійснює повторні спроби з’єднання, що підвищує стабільність роботи системи.
+     * Для обробки даних датчиків впроваджено алгоритм згладжування за допомогою методу ковзного середнього вікна. Це дозволило отримувати точні значення параметрів, таких як температура, вологість, концентрація CO₂ та освітленість, виключаючи випадкові коливання.
+     * Реалізовано механізм відправлення даних у форматі JSON через HTTP POST-запити. Це забезпечує зручність інтеграції системи з іншими сервісами та дозволяє зберігати дані для подальшого аналізу.
+     * Система передбачає виявлення помилок під час передачі даних, таких як недоступність сервера чи помилки з’єднання. У таких випадках спроби передачі повторюються або дані зберігаються локально для повторної відправки.
+     Зазначені рішення забезпечують стабільність, точність і безпеку функціонування системи, дозволяючи її використовувати для аналізу навколишнього середовища та підтримки оптимальних умов.
+
+ВИСНОВКИ
+
+     У ході роботи було реалізовано низку інженерних рішень, спрямованих на забезпечення стабільності, точності та функціональності системи. Впроваджено алгоритми автоматичного підключення до мережі Wi-Fi, фільтрації даних від шумів, а також передачі й збереження даних для подальшого аналізу.
+     Додатково розроблено механізми обробки помилок зв’язку, що підвищують надійність системи в умовах нестабільної роботи мережі. Використання генерації тестових даних дозволяє проводити діагностику системи без підключення до фізичних датчиків.
+Аналітична обробка отриманих даних включає обчислення ключових параметрів та аналіз їхніх змін, що сприяє більш точному розумінню середовища і дає змогу оперативно реагувати на відхилення.
+     Система також забезпечує високий рівень захисту конфіденційної інформації, що є важливим аспектом у роботі з даними. Таким чином, реалізовані рішення дозволяють досягти заданих цілей та створюють основу для подальшого розвитку та масштабування функціоналу.
+
+ДОДАТОК А
+UML діаграма прецедентів ІоТ клієнта
+
+
+Рисунок А.1 – Діаграма прецедентів ІоТ клієнта. Частина 1
+
+
+Рисунок А.2 – Діаграма прецедентів ІоТ клієнта. Частина 2
+
+
+
+
+
+
+
+
+
+ДОДАТОК Б
+UML діаграма діяльності ІоТ клієнта
+
+
+Рисунок Б.1 – UML діагма діяльності для ІоТ клієнта
+
+
+ДОДАТОК В
+Фрагмент програмного коду бізнес-логіки ІоТ клієнта (математичної обробки пов’язаних із предметною областю даних)
+
+01 #include "ServerRequest.h"
+02 #include <ArduinoJson.h>
+03 
+04 #define WINDOW_SIZE 5
+05 
+06 
+07 int temperatureReadings[WINDOW_SIZE];
+08 int moistureReadings[WINDOW_SIZE];
+09 int carbonDioxideReadings[WINDOW_SIZE];
+10 int illuminationReadings[WINDOW_SIZE];
+11 
+12 
+13 int currentIndex = 0;
+14 bool windowFull = false;
+15
+16 // Calculates the moving average of the given readings array
+17 // It updates the circular buffer with the new value and computes the average
+18 float calculateMovingAverage(int readings[], int newValue) {
+19     readings[currentIndex] = newValue;
+20     currentIndex = (currentIndex + 1) % WINDOW_SIZE;
+21
+22     if (!windowFull && currentIndex == 0) {
+23         windowFull = true;
+24     }
+25
+26     int sum = 0;
+27     int count = windowFull ? WINDOW_SIZE : currentIndex;
+28     for (int i = 0; i < count; i++) {
+29         sum += readings[i];
+30     }
+31     return (float)sum / count;
+32 }
+33
+34 // Sends a POST request with sensor data to the given server URL
+35 // The data includes smoothed values for temperature, moisture, CO₂, and illumination
+36 void sendPostRequest(const String& serverUrl) {
+37     HTTPClient http;
+38
+39     http.begin(serverUrl);
+40
+41     http.addHeader("Content-Type", "application/json");
+42
+43     // Simulating sensor readings with random values
+44     int rawTemperature = random(15, 31);
+45     int rawMoisture = random(15, 81);
+46     int rawCarbonDioxide = random(200, 1201);
+47     int rawIllumination = random(100, 1001);
+48
+49     // Calculating smoothed sensor data using a moving average
+50     float smoothedTemperature = calculateMovingAverage(temperatureReadings, rawTemperature);
+51     float smoothedMoisture = calculateMovingAverage(moistureReadings, rawMoisture);
+52     float smoothedCarbonDioxide = calculateMovingAverage(carbonDioxideReadings, rawCarbonDioxide);
+53     float smoothedIllumination = calculateMovingAverage(illuminationReadings, rawIllumination);
+54
+55     StaticJsonDocument<200> doc;
+56     doc["id"] = "675ee19fa59bfe3ae8d8439b";
+57     doc["user"] = "675ee094a59bfe3ae8d84391";
+58     doc["temperature"] = smoothedTemperature;
+59     doc["moisture"] = smoothedMoisture;
+60     doc["carbonDioxide"] = smoothedCarbonDioxide;
+61     doc["illumination"] = smoothedIllumination;
+62
+63     String payload;
+64     serializeJson(doc, payload);
+65
+66     // Sending POST request and handling the response
+67     int httpCode = http.POST(payload);
+68
+69     if (httpCode > 0) {
+70         String responsePayload = http.getString();
+71         Serial.println("HTTP POST request successful!");
+72     } else {
+73         Serial.print("HTTP POST request failed with error code: ");
+74         Serial.println(httpCode);
+75
+76         String errorBody = http.getString();
+77         if (errorBody.length() > 0) {
+78             Serial.println("Error body received:");
+79             Serial.println(errorBody);
+80         }
+81
+82         // Handle different error codes
+83         switch(httpCode) {
+84             case -1:
+85                 Serial.println("Error: Could not connect to the server.");
+86                 break;
+87             case 0:
+88                 Serial.println("Error: Timeout or no response from the server.");
+89                 break;
+90             case 400:
+91                 Serial.println("Error: Bad request. Check the JSON format or endpoint.");
+92                 break;
+93             case 401:
+94                 Serial.println("Error: Unauthorized. Check your API key or credentials.");
+95                 break;
+96             case 500:
+97                 Serial.println("Error: Internal server error. Try again later.");
+98                 break;
+99             default:
+100                 Serial.println("Error: Unexpected error occurred.");
+101                 break;
+102         }
+103     }
+104
+105     http.end();
+106 }
+
+Фрагмент програмного коду налаштування ІоТ клієнта
+
+01 #include "NetworkSetup.h"
+02 
+03 const char* WIFI_SSID = "Wokwi-GUEST";
+04 const char* WIFI_PASSWORD = "";
+05
+06 void setupWiFiConnection() {
+07     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+08
+09     while (WiFi.status() != WL_CONNECTED) {
+10         delay(500);
+11         Serial.println("Connecting to WiFi...");
+12     }
+13     Serial.println("Connected to WiFi");
+14 }
+ДОДАТОК Г
+Відео-посилання на Youtube
+
+ Посилання: https://youtu.be/dWbv26vhLNU
