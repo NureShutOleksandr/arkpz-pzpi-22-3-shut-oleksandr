@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Patch,
   Post,
   UseGuards,
   UsePipes,
@@ -61,9 +60,8 @@ export class RoomsController {
 
   @ApiOperation({ summary: 'Update room' })
   @ApiResponse({ status: 200, type: Room })
-  @Patch()
+  @Post('/update')
   @UsePipes(ValidationPipe)
-  @UseGuards(JwtAuthGuard)
   update(@Body() dto: UpdateRoomDto): Promise<RoomDocument> {
     return this.roomsService.update(dto)
   }

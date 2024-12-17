@@ -552,36 +552,6 @@
         "tags": [
           "rooms"
         ]
-      },
-      "patch": {
-        "operationId": "RoomsController_update",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRoomDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Update room",
-        "tags": [
-          "rooms"
-        ]
       }
     },
     "/api/rooms/{id}/analyze": {
@@ -656,6 +626,38 @@
           }
         },
         "summary": "Delete room",
+        "tags": [
+          "rooms"
+        ]
+      }
+    },
+    "/api/rooms/update": {
+      "post": {
+        "operationId": "RoomsController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update room",
         "tags": [
           "rooms"
         ]
