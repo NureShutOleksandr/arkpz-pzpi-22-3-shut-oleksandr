@@ -9,7 +9,6 @@ import winreg
 def ensure_node_in_path():
     node_path = r"C:\Program Files\nodejs"  # Default Node.js installation path
     if node_path not in os.environ['PATH']:
-        print(f"Node.js path not found in PATH.")
         os.environ['PATH'] += os.pathsep + node_path
     else:
         print(f"'{node_path}' is already in PATH.")
@@ -126,3 +125,13 @@ def install_nodejs(version="20.5.0"):
         print(f"An error occurred: {e}")
         sys.exit(1)
 
+def nodejs_setup():
+    if not check_node_installed():
+        install_choice = input("Do you want to install Node.js? [y/N]: ").strip().lower()
+        if install_choice == 'y':
+            install_nodejs()
+        else:
+            print("Node.js not installed. Exiting.")
+            sys.exit(1)
+    else:
+        print("Proceeding with the project setup...")
