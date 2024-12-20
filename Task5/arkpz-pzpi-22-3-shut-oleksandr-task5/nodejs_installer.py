@@ -4,8 +4,30 @@ import os
 import sys
 import requests
 import subprocess
-import time
 import winreg
+
+def ensure_node_in_path():
+    node_path = r"C:\Program Files\nodejs"  # Default Node.js installation path
+    if node_path not in os.environ['PATH']:
+        print(f"Node.js path not found in PATH.")
+        os.environ['PATH'] += os.pathsep + node_path
+    else:
+        print(f"'{node_path}' is already in PATH.")
+
+def check_node_installed():
+    ensure_node_in_path()
+    try:
+        print("Checking Node.js installation...")
+        node_version = subprocess.check_output(['node', '-v'], stderr=subprocess.STDOUT, text=True, shell=True).strip()
+        print(f"Node.js is installed. Version: {node_version}")
+        return True
+    except FileNotFoundError:
+        print("Node.js executable not found.")
+        print(f"Current PATH: {os.environ['PATH']}")
+        return False
+    except subprocess.CalledProcessError as e:
+        print(f"Command failed. Node not installed.")
+        return False
 
 # Downloads the Node.js .msi installer for a given version
 def download_nodejs_msi(version="20.5.0"):
