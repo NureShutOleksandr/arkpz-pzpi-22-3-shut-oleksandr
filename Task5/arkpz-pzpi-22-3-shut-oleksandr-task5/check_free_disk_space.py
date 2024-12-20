@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import shutil
 
 # Check if there is enough free disk space (at least 400 MB)
