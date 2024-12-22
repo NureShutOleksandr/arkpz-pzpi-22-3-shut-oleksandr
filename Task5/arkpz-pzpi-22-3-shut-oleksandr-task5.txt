@@ -1,0 +1,217 @@
+﻿Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+Кафедра програмної інженерії
+
+
+
+ЗВІТ
+до лабораторної роботи №5
+з дисципліни  «Аналіз та рефакторинг коду»
+на тему: «РОЗГОРТАННЯ ПРОГРАМНОЇ СИСТЕМИ ТА ДЕМОНСТРАЦІЯ ЇЇ РОБОТИ»
+
+
+
+
+Виконав
+ст. гр. ПЗПІ-22-3
+Шуть Олександр Вікторович
+
+Перевірив
+ст. викладач катедри ПІ
+Сокорчук Ігор Петрович
+
+
+
+
+
+
+
+Харків 2024
+1 МЕТА РОБОТИ
+
+     Розгорнути програмну систему, перевірити її функціональність та налаштувати для безперебійної роботи. Забезпечити коректне взаємодія з іншими компонентами та продемонструвати стабільність роботи розгорнутої системи в реальних умовах.
+
+2 ХІД РОБОТИ
+
+     Під час виконання лабораторної роботи було реалізовано кілька інженерних рішень, які забезпечують коректну роботу скрипта та зручність користувача. Ось основні рішення:
+     * Реалізовано перевірку вільного місця на диску при запуску скрипта. Це дозволяє переконатися, що на пристрої є достатньо ресурсів для подальшого виконання операцій.
+     * Додано запит на введення пароля до бази даних перед продовженням роботи скрипта. Це підвищує безпеку доступу до даних.
+     * Перевіряється наявність встановленої Node.js. Якщо вона не знайдена, користувачу пропонується встановити Node.js, і лише після цього скрипт продовжує виконання.
+     * Реалізовано автоматичне завантаження залежностей для проекту, що забезпечує готовність середовища до запуску.
+     * Завершальний етап – запуск серверу, що дозволяє забезпечити функціональність розгорнутого проекту.
+Ці рішення забезпечують зручність, безпеку та ефективність роботи при запуску та налаштуванні середовища для проекту.
+
+ВИСНОВКИ
+
+     Під час виконання лабораторної роботи було успішно розгорнуто програмну систему та забезпечено її стабільну роботу. Реалізовані інженерні рішення, такі як перевірка вільного місця на диску, запит пароля до бази даних, перевірка наявності Node.js та автоматичне завантаження залежностей, значно підвищили зручність і безпеку процесу налаштування середовища. Завдяки цим крокам вдалося забезпечити безперебійну роботу.
+
+ДОДАТОК А
+Фрагмент програмного коду головного файлу скрипта для розгортання
+
+01 import sys
+02
+03 from nodejs_installer import nodejs_setup
+04 from check_database_password import prompt_password
+05 from check_free_disk_space import check_free_disk_space
+06 from packages_install import run_npm_install
+07 from run_server import run_npm_run_dev
+08
+09 # Main entry point for downloading, installing, and verifying Node.js
+10 def main():
+11     try:
+12         check_free_disk_space()
+13         prompt_password()
+14         nodejs_setup()
+15         run_npm_install()
+16         run_npm_run_dev()
+17     except Exception as e:
+18         print(f"An error occurred: {e}")
+19         sys.exit(1)
+20
+21 if __name__ == "__main__":
+22     main()
+
+Фрагмент програмного коду перевірки встановлення необхідних інструментів для розгортання та їх встановлення
+ 
+01 import os
+02 import sys
+03 import requests
+04 import subprocess
+05 import winreg
+06
+07 def ensure_node_in_path():
+08     node_path = r"C:\Program Files\nodejs"  # Default Node.js installation path
+09     if node_path not in os.environ['PATH']:
+10         os.environ['PATH'] += os.pathsep + node_path
+11     else:
+12         print(f"'{node_path}' is already in PATH.")
+13
+14 def check_node_installed():
+15     ensure_node_in_path()
+16     try:
+17         print("Checking Node.js installation...")
+18         node_version = subprocess.check_output(['node', '-v'], stderr=subprocess.STDOUT, text=True, shell=True).strip()
+19         print(f"Node.js is installed. Version: {node_version}")
+20         return True
+21     except FileNotFoundError:
+22         print("Node.js executable not found.")
+23         print(f"Current PATH: {os.environ['PATH']}")
+24         return False
+25     except subprocess.CalledProcessError as e:
+26         print(f"Command failed. Node not installed.")
+27         return False
+28
+29 # Downloads the Node.js .msi installer for a given version
+30 def download_nodejs_msi(version="20.5.0"):
+31     url = f"https://nodejs.org/dist/v{version}/node-v{version}-x64.msi"
+32     file_name = f"node-v{version}-x64.msi"
+33     print(f"Downloading Node.js {version}...")
+34
+35     response = requests.get(url, stream=True)
+36     if response.status_code == 200:
+37         with open(file_name, "wb") as file:
+38             for chunk in response.iter_content(chunk_size=8192):
+39                 file.write(chunk)
+40         print(f"File {file_name} downloaded successfully.")
+41         return file_name
+42     else:
+43         raise Exception(f"Download error: {response.status_code}")
+44
+45 # Installs the Node.js .msi file using msiexec
+46 def install_msi(file_name):
+47     print(f"Starting installation of {file_name}...")
+48     try:
+49         process = subprocess.Popen(
+50             ["msiexec", "/i", file_name, "/quiet", "/norestart"],
+51             shell=True,
+52             stdout=subprocess.PIPE,
+53             stderr=subprocess.PIPE
+54         )
+55         stdout, stderr = process.communicate()
+56         if process.returncode == 0:
+57             print("Installation completed successfully.")
+58         else:
+59             error_message = stderr.decode().strip()
+60             print(f"Installation error: {error_message}")
+61             raise Exception(f"msiexec returned exit code {process.returncode}")
+62     except Exception as e:
+63         print(f"Installation error: {e}")
+64         raise
+65
+66 # Retrieves the full PATH environment variable on Windows
+67 def get_windows_path():
+68     try:
+69         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r'Environment') as key:
+70             user_path, _ = winreg.QueryValueEx(key, 'Path')
+71     except FileNotFoundError:
+72         user_path = ''
+73
+74     try:
+75         with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment') as key:
+76             system_path, _ = winreg.QueryValueEx(key, 'Path')
+77     except FileNotFoundError:
+78         system_path = ''
+79
+80     if user_path and system_path:
+81         full_path = system_path + ';' + user_path
+82     elif system_path:
+83         full_path = system_path
+84     else:
+85         full_path = user_path
+86
+87     return full_path
+88
+89 # Updates the PATH environment variable in the current session
+90 def update_env():
+91     try:
+92         full_path = get_windows_path()
+93         os.environ['PATH'] = full_path
+94         print("Environment PATH updated.")
+95     except Exception as e:
+96         print(f"Failed to update environment PATH: {e}")
+97         raise
+98
+99 # Verifies if Node.js is installed and prints the version
+100 def verify_installation():
+101     try:
+102         result = subprocess.check_output(["node", "-v"], shell=True, text=True)
+103         print(f"Node.js is installed: version {result.strip()}")
+104     except FileNotFoundError:
+105         print("Node.js is not installed. Check the installation process.")
+106     except subprocess.CalledProcessError as e:
+107         print(f"Error during Node.js installation check: {e}")
+108
+109 # Main entry point for downloading, installing, and verifying Node.js
+110 def install_nodejs(version="20.5.0"):
+111     try:
+112         file_name = download_nodejs_msi(version)
+113         install_msi(file_name)
+114         update_env()
+115         node_js_bin = r'C:\Program Files\nodejs'
+116         if node_js_bin not in os.environ['PATH']:
+117             os.environ['PATH'] += os.pathsep + node_js_bin
+118             print(f"Added '{node_js_bin}' to PATH.")
+119         else:
+120             print(f"'{node_js_bin}' is already in PATH.")
+121         verify_installation()
+122     except Exception as e:
+123         print(f"An error occurred: {e}")
+124         sys.exit(1)
+125
+126 def nodejs_setup():
+127     if not check_node_installed():
+128         install_choice = input("Do you want to install Node.js? [y/N]: ").strip().lower()
+129         if install_choice == 'y':
+130             install_nodejs()
+131         else:
+132             print("Node.js not installed. Exiting.")
+133             sys.exit(1)
+134     else:
+135         print("Proceeding with the project setup...")
+
+
+
+ДОДАТОК Б
+Відео-посилання на Youtube
+
+ Посилання: https://youtu.be/sye9nDeTM_4
